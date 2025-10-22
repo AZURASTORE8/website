@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EVOL CITY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="./index.html">
+        <img src="./assets/logo.png" alt="EVOL CITY" />
+      </a>
+      <nav class="menu">
+        <a href="./index.html" class="active">หน้าหลัก</a>
+        <a href="./topup.html">เติมเงิน</a>
+        <a href="./shop.html">ร้านค้า</a>
+        <a href="./roles.html">รับยศไวริส</a>
+        <a href="./rewards.html">รับของกิจกรรม</a>
+      </nav>
+      <div class="account">
+        <a class="login-link" href="./login.html">เข้าสู่ระบบ</a>
+        <button id="profileToggle" class="profile">
+          <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar" />
+          <span class="name">USER</span>
+        </button>
+        <div class="dropdown" id="profileMenu">
+          <a href="#">โปรไฟล์</a>
+          <a href="#">ประวัติรายการ</a>
+          <a href="#" id="logoutBtn">ออกจากระบบ</a>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <h2 class="overline">SERVER STATUS</h2>
+        <h1 class="title">EVOL CITY</h1>
+        <a class="btn btn-large" href="https://discord.gg/evolcity" target="_blank" rel="noopener">DISCORD EVOL CITY</a>
+      </div>
+    </section>
+  </main>
+
+  <canvas id="snowCanvas"></canvas>
+  <script>
+    (function(){
+      const c = document.getElementById('snowCanvas');
+      const ctx = c.getContext('2d');
+      const setSize = () => { c.width = window.innerWidth; c.height = window.innerHeight; };
+      setSize();
+      window.addEventListener('resize', setSize);
+      Object.assign(c.style, { position: 'fixed', left: 0, top: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 9999 });
+      const N = 160;
+      const flakes = Array.from({ length: N }, () => ({
+        x: Math.random() * c.width,
+        y: Math.random() * c.height,
+        r: Math.random() * 2.2 + 0.8,
+        vx: Math.random() * 0.6 - 0.3,
+        vy: Math.random() * 1.2 + 0.6,
+        drift: Math.random() * 2 * Math.PI
+      }));
+      function step(){
+        ctx.clearRect(0,0,c.width,c.height);
+        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        for(const f of flakes){
+          f.drift += 0.01;
+          f.x += f.vx + Math.sin(f.drift) * 0.3;
+          f.y += f.vy;
+          if(f.y - f.r > c.height){ f.y = -f.r; f.x = Math.random()*c.width; }
+          if(f.x < -10) f.x = c.width + 10; else if(f.x > c.width + 10) f.x = -10;
+          ctx.beginPath();
+          ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+          ctx.fill();
+        }
+        requestAnimationFrame(step);
+      }
+      step();
+    })();
+  </script>
+  
+  <script src="./js/main.js"></script>
+</body>
+</html>

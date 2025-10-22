@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ซื้อไอริส - EVOL CITY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="./index.html"><img src="./assets/logo.png" alt="EVOL CITY" /></a>
+      <nav class="menu">
+        <a href="./index.html">หน้าหลัก</a>
+        <a href="./topup.html">เติมเงิน</a>
+        <a href="./shop.html">ร้านค้า</a>
+        <a href="./roles.html" class="active">รับยศไวริส</a>
+        <a href="./rewards.html">รับของกิจกรรม</a>
+      </nav>
+      <div class="account">
+        <a class="login-link" href="./login.html">เข้าสู่ระบบ</a>
+        <button id="profileToggle" class="profile">
+          <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar" />
+          <span class="name">USER</span>
+        </button>
+        <div class="dropdown" id="profileMenu">
+          <a href="#">โปรไฟล์</a>
+          <a href="#">ประวัติรายการ</a>
+          <a href="#" id="logoutBtn">ออกจากระบบ</a>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </header>
+
+  <main>
+    <section class="page">
+      <div class="container">
+        <h1 class="page-title">รับยศไวริส</h1>
+        <div class="grid cards-3">
+          <div class="card role">
+            <img src="./assets/logo.png" alt="Whitelist" class="role-img" />
+            <h3>WHITELISTED</h3>
+            <p>ไวริสเซิร์ฟเวอร์ (EVOL CITY)</p>
+            <div class="buy-row">
+              <input type="text" value="ยังไม่มีไวริส" readonly tabindex="-1" style="pointer-events:none;" aria-readonly="true" />
+              <div class="price">FREE</div>
+              <button class="btn btn-buy btn-claim">รับไวริส</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EVOL CITY • รับของกิจกรรม</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css" />
+  <style>
+    .reward-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .reward-card {
+      background: linear-gradient(145deg, #1a2035, #141a2a);
+      border: 1px solid rgba(99, 102, 241, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .reward-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .reward-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    
+    .reward-content {
+      padding: 1.5rem;
+    }
+    
+    .reward-title {
+      font-size: 1.25rem;
+      margin: 0 0 0.5rem;
+      color: #e2e8f0;
+    }
+    
+    .reward-description {
+      color: #94a3b8;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .reward-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+    
+    .reward-remaining {
+      color: #60a5fa;
+      font-weight: 600;
+    }
+    
+    .reward-button {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    
+    .btn-claim {
+      background: #2563eb;
+      color: white;
+    }
+    
+    .btn-claim:hover {
+      background: #1d4ed8;
+    }
+    
+    .btn-claimed {
+      background: #10b981;
+      color: white;
+      cursor: not-allowed;
+    }
+    
+    .btn-out-of-stock {
+      background: #6b7280;
+      color: white;
+      cursor: not-allowed;
+    }
+    
+    .success-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    
+    .popup-content {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+    
+    .popup-icon {
+      font-size: 3rem;
+      color: #10b981;
+      margin-bottom: 1rem;
+    }
+    
+    .popup-message {
+      margin-bottom: 1.5rem;
+      color: #e2e8f0;
+    }
+    
+    .spinner-border {
+      width: 1rem;
+      height: 1rem;
+      border-width: 0.15em;
+    }
+    
+    .loading-container {
+      text-align: center;
+      padding: 2rem;
+    }
+  </style>
+</head>
+<body class="page-ready">
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="./index.html"><img src="./assets/logo.png" alt="EVOL CITY" /></a>
+      <nav class="menu">
+        <a href="./index.html">หน้าหลัก</a>
+        <a href="./topup.html">เติมเงิน</a>
+        <a href="./shop.html">ร้านค้า</a>
+        <a href="./roles.html" class="active">รับยศไวริส</a>
+        <a href="./rewards.html">รับของกิจกรรม</a>
+      </nav>
+      <div class="account">
+        <a class="login-link" href="./login.html">เข้าสู่ระบบ</a>
+        <button id="profileToggle" class="profile">
+          <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar" />
+          <span class="name">USER</span>
+        </button>
+        <div class="dropdown" id="profileMenu">
+          <a href="#">โปรไฟล์</a>
+          <a href="#">ประวัติรายการ</a>
+          <a href="#" id="logoutBtn">ออกจากระบบ</a>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <h1 class="page-title">รับของกิจกรรม</h1>
+      <p class="page-sub">กดรับโค้ดเพื่อรับของรางวัลพิเศษ</p>
+      
+      <div id="rewardsContainer" class="reward-container">
+        <div class="loading-container">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-2">กำลังโหลดรายการของรางวัล...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // This will be populated by rewards.js
+    let rewardsList = [];
+  </script>
+  <script src="./js/rewards.js"></script>
+  <script>
+    // Handle logout
+    document.getElementById('logoutBtn')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      localStorage.removeItem('discordUser');
+      localStorage.removeItem('discord_token');
+      window.location.href = 'login.html';
+    });
+
+    // Toggle profile menu
+    const profileToggle = document.getElementById('profileToggle');
+    const profileMenu = document.getElementById('profileMenu');
+    
+    if (profileToggle && profileMenu) {
+      profileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function() {
+        profileMenu.style.display = 'none';
+      });
+    }
+
+    // Check if user is logged in
+    const userData = localStorage.getItem('discordUser');
+    const loginLink = document.querySelector('.login-link');
+    const profileSection = document.querySelector('.profile');
+
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        if (loginLink) loginLink.style.display = 'none';
+        if (profileSection) {
+          profileSection.style.display = 'flex';
+          const avatarImg = profileSection.querySelector('.avatar');
+          const nameSpan = profileSection.querySelector('.name');
+          
+          if (user.avatar) {
+            const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+            avatarImg.src = avatarUrl;
+          }
+          
+          if (nameSpan && user.username) {
+            nameSpan.textContent = user.username;
+          }
+        }
+      } catch (e) {
+        console.error('Error parsing user data:', e);
+      }
+    } else {
+      if (loginLink) loginLink.style.display = 'inline-block';
+      if (profileSection) profileSection.style.display = 'none';
+    }
+  </script>
+  <script src="./js/main.js"></script>
+</body>
+</html>

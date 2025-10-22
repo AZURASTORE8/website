@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ร้านค้า - EVOL CITY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="./index.html"><img src="./assets/logo.png" alt="EVOL CITY" /></a>
+      <nav class="menu">
+        <a href="./index.html">หน้าหลัก</a>
+        <a href="./topup.html">เติมเงิน</a>
+        <a href="./shop.html" class="active">ร้านค้า</a>
+        <a href="./roles.html">รับยศไวริส</a>
+        <a href="./rewards.html">รับของกิจกรรม</a>
+      </nav>
+      <div class="account">
+        <a class="login-link" href="./login.html">เข้าสู่ระบบ</a>
+        <button id="profileToggle" class="profile">
+          <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="avatar" />
+          <span class="name">USER</span>
+        </button>
+        <div class="dropdown" id="profileMenu">
+          <a href="#">โปรไฟล์</a>
+          <a href="#">ประวัติรายการ</a>
+          <a href="#" id="logoutBtn">ออกจากระบบ</a>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </header>
+
+  <main>
+    <section class="page">
+      <div class="container">
+        <h1 class="page-title">ร้านค้า</h1>
+        <div class="grid cards-3">
+          <div class="card product" data-product-id="vip_new_1_pack">
+            <img src="https://dummyimage.com/600x400/1f1f1f/ffffff&text=VIP+NEW+PACK" alt="VIP" />
+            <h3>VIP NEW 1 PACK</h3>
+            <p>VIP NEW 1 PACK [ 1 EA ]</p>
+            <div class="buy-row">
+              <input type="number" min="1" value="1" disabled />
+              <div class="price">1299 POINT</div>
+              <button class="btn btn-buy">BUY</button>
+            </div>
+          </div>
+          <div class="card product" data-product-id="sweet_desert_daily">
+            <img src="https://dummyimage.com/600x400/1f1f1f/ffffff&text=SWEET+DESERT+DAILY" alt="SWEET" />
+            <h3>SWEET DESERT DAILY PACK</h3>
+            <p>SWEET DESERT DAILY PACK [ 1 EA ]</p>
+            <div class="buy-row">
+              <input type="number" min="1" value="1" disabled />
+              <div class="price">99 POINT</div>
+              <button class="btn btn-buy">BUY</button>
+            </div>
+          </div>
+          <div class="card product" data-product-id="sweet_desert_basic">
+            <img src="https://dummyimage.com/600x400/1f1f1f/ffffff&text=SWEET+DESERT+BASIC" alt="SWEET BASIC" />
+            <h3>SWEET DESERT BASIC PACK</h3>
+            <p>SWEET DESERT BASIC PACK [ 1 EA ]</p>
+            <div class="buy-row">
+              <input type="number" min="1" value="1" disabled />
+              <div class="price">399 POINT</div>
+              <button class="btn btn-buy">BUY</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/main.js"></script>
+</body>
+</html>

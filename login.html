@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - EVOL CITY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="./main.html">
+        <img src="./assets/logo.png" alt="EVOL CITY" />
+      </a>
+      <nav class="menu"></nav>
+      <a class="login-link" href="./login.html">เข้าสู่ระบบ</a>
+    </div>
+    <div class="divider"></div>
+  </header>
+
+  <main>
+    <section class="page">
+      <div class="container center">
+        <h1 class="page-title">LOGIN</h1>
+        <a class="btn btn-discord" id="discordLogin" href="#">เข้าสู่ระบบด้วย Discord</a>
+      </div>
+    </section>
+  </main>
+
+<script>
+      const clientId = "1405557372629417994";
+      const redirectUri = encodeURIComponent(`${window.location.origin}/login.html`);
+      const responseType = "token"; // แทน code
+      const scope = encodeURIComponent("identify email guilds guilds.join");
+      const authorizeUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
+
+  document.getElementById('discordLogin').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = authorizeUrl;
+  });
+
+  // Handle redirect back with access_token and store user to localStorage
+  (async () => {
+    if (location.hash && location.hash.includes('access_token')) {
+      const params = new URLSearchParams(location.hash.substring(1));
+      const accessToken = params.get('access_token');
+      try {
+        const res = await fetch('https://discord.com/api/users/@me', {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        if (res.ok) {
+          const user = await res.json();
+          const payload = JSON.stringify({
+            id: user.id,
+            username: user.global_name || user.username,
+            discriminator: user.discriminator,
+            avatar: user.avatar
+          });
+          localStorage.setItem('discordUser', payload);
+          try {
+            // 30 days
+            const maxAge = 60 * 60 * 24 * 30;
+            document.cookie = `discordUser=${encodeURIComponent(payload)}; Max-Age=${maxAge}; Path=/; SameSite=Lax`;
+          } catch {}
+          try {
+            await fetch('/users/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: user.id, username: user.global_name || user.username, discriminator: user.discriminator, avatar: user.avatar })
+            });
+          } catch {}
+          // Try auto-join guild (non-blocking)
+          try {
+            await fetch('/join-guild', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ userId: user.id, accessToken, guildId: '1423651393390252136' })
+            });
+          } catch {}
+          // Clean hash and go to main page
+          location.hash = '';
+          location.replace('./main.html');
+        }
+      } catch (e) {
+        console.error('OAuth fetch user failed:', e);
+      }
+    }
+  })();
+</script>
+  <script src="./js/main.js"></script>
+</body>
+</html>
